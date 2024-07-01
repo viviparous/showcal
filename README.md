@@ -1,5 +1,10 @@
 # showcal
-Showcal is a calendar/task/appointment manager ("bash script").  It is simple -- VERY simple -- and portable. 
+Showcal is a minimalist calendar/task/appointment manager ("bash script").  It is simple -- VERY simple -- and portable. 
+
+The "philosophy" is to 
+-- be minimal, simple, and portable.
+-- list week numbers with the weeks beginning on Monday. 
+-- manage dates/tasks/appointments in a simple text file.
 
 Dependencies: bash, Perl, awk, ncal , cal (in Cygwin).
 

@@ -1,9 +1,16 @@
 #! /usr/bin/env bash
 
-repeat(){
+function repeat(){
 	for i in {1..40}; do echo -n "$1"; done
 	echo ""
 }
+
+function prcygw() {
+
+  cal -m -w -n 6 | sed 's/ /-/g' | perl -Mfeature=say -ne 'BEGIN { %d01=(); @a01=(); $iR=0; $iC=0; } { chomp($_);  push @a01, $_; } END { for $LL (@a01){  $iR++ if $LL =~ /\d\d\d\d/; $pos=0; for $ii (1..3){  $ss=substr($LL,$pos,25); $pos+=25;  push @{$d01{$iR.".".$iC}},$ss; $iC++; $iC=0 if $iC>2 ;} }  for $k ( sort {$a<=>$b} keys %d01) { say "\n". join("\n", @{$d01{$k}}); } }'
+
+}
+
 
 
 mode=0
@@ -54,7 +61,15 @@ osvar=$(uname -a)
 if [[ "$osvar" =~ "CYGWIN" ]]; then
  echo "OS = cygwin"
  #if($^O eq "cygwin"){ #expect cal, not ncal
- cal -m -w -n 6 | sed 's/ /-/g' | perl -Mfeature=say -ne 'BEGIN { %d01=(); @a01=(); $iR=0; $iC=0; } { chomp($_);  push @a01, $_; } END { for $LL (@a01){  $iR++ if $LL =~ /\d\d\d\d/; $pos=0; for $ii (1..3){  $ss=substr($LL,$pos,25); $pos+=25;  push @{$d01{$iR.".".$iC}},$ss; $iC++; $iC=0 if $iC>2 ;} }  for $k ( sort {$a<=>$b} keys %d01) { say "$k =>\n". join("\n", @{$d01{$k}}); } }'
+
+ if [ $mode -eq 0 ]; then
+  cal -m -w -n 6 | sed 's/ /-/g' | perl -Mfeature=say -ne 'BEGIN { %d01=(); @a01=(); $iR=0; $iC=0; } { chomp($_);  push @a01, $_; } END { for $LL (@a01){  $iR++ if $LL =~ /\d\d\d\d/; $pos=0; for $ii (1..3){  $ss=substr($LL,$pos,25); $pos+=25;  push @{$d01{$iR.".".$iC}},$ss; $iC++; $iC=0 if $iC>2 ;} }  for $k ( sort {$a<=>$b} keys %d01) { say "\n". join("\n", @{$d01{$k}}); } }'
+ 
+ else
+  cal -m -w -n 6 | sed 's/ /-/g' | perl -Mfeature=say -ne 'BEGIN { %d01=(); @a01=(); $iR=0; $iC=0; } { chomp($_);  push @a01, $_; } END { for $LL (@a01){  $iR++ if $LL =~ /\d\d\d\d/; $pos=0; for $ii (1..3){  $ss=substr($LL,$pos,25); $pos+=25;  push @{$d01{$iR.".".$iC}},$ss; $iC++; $iC=0 if $iC>2 ;} }  for $k ( sort {$a<=>$b} keys %d01) { say "\n". join("\n", @{$d01{$k}}); } }' | awk -F'-' 'function isnum(x){return(x==x+0)} { if(isnum($1) && $1%2!=0){ for(c=0;c<50;c++) printf "-"; print $0} else{print $0}}'
+
+ fi
+
  repeat 'x'
  cal -m -w 
  echo "[ $DD ] in w $WW"

@@ -1,6 +1,8 @@
 # showcal
 Showcal is a calendar/task/appointment manager ("bash script").  It is simple -- VERY simple -- and portable. 
 
+Dependencies: bash, Perl, awk, ncal , cal (in Cygwin).
+
 ## Parameters
 
 ./showcal.sh  => If no parameter is given, showcal presents a list of months.

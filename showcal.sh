@@ -63,10 +63,11 @@ if [[ "$osvar" =~ "CYGWIN" ]]; then
  #if($^O eq "cygwin"){ #expect cal, not ncal
 
  if [ $mode -eq 0 ]; then
-  cal -m -w -n 6 | sed 's/ /-/g' | perl -Mfeature=say -ne 'BEGIN { %d01=(); @a01=(); $iR=0; $iC=0; } { chomp($_);  push @a01, $_; } END { for $LL (@a01){  $iR++ if $LL =~ /\d\d\d\d/; $pos=0; for $ii (1..3){  $ss=substr($LL,$pos,25); $pos+=25;  push @{$d01{$iR.".".$iC}},$ss; $iC++; $iC=0 if $iC>2 ;} }  for $k ( sort {$a<=>$b} keys %d01) { say "\n". join("\n", @{$d01{$k}}); } }'
- 
+  prcygw
+
  else
-  cal -m -w -n 6 | sed 's/ /-/g' | perl -Mfeature=say -ne 'BEGIN { %d01=(); @a01=(); $iR=0; $iC=0; } { chomp($_);  push @a01, $_; } END { for $LL (@a01){  $iR++ if $LL =~ /\d\d\d\d/; $pos=0; for $ii (1..3){  $ss=substr($LL,$pos,25); $pos+=25;  push @{$d01{$iR.".".$iC}},$ss; $iC++; $iC=0 if $iC>2 ;} }  for $k ( sort {$a<=>$b} keys %d01) { say "\n". join("\n", @{$d01{$k}}); } }' | awk -F'-' 'function isnum(x){return(x==x+0)} { if(isnum($1) && $1%2!=0){ for(c=0;c<50;c++) printf "-"; print $0} else{print $0}}'
+  prcygw | awk -F'-' 'function isnum(x){return(x==x+0)} { if(isnum($1) && $1%2!=0){ for(c=0;c<50;c++) printf "-"; print $0} else{print $0}}'
+
 
  fi
 

@@ -19,6 +19,8 @@ if [[ $argcount -eq 1 && $1 -eq 1 ]]; then
  mode=1
 elif [[ $argcount -eq 1 && $1 -eq 3 ]]; then
  mode=3
+elif [[ $argcount -eq 1 && $1 -eq 5 ]]; then
+ mode=5
 
 fi
 
@@ -47,6 +49,16 @@ if [ $mode -eq 3 ]; then
     cat $currdir/$calconf
   elif [ -e "$calconf" ]; then
     cat $calconf
+  else
+    echo "No file $calconf found!"	
+  fi
+ exit 0
+elif [ $mode -eq 5 ]; then
+  currdir=$(dirname $0)
+  if [ -e "$currdir/$calconf" ]; then
+    nano $currdir/$calconf
+  elif [ -e "$calconf" ]; then
+    nano $calconf
   else
     echo "No file $calconf found!"	
   fi

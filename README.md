@@ -19,4 +19,7 @@ Dependencies: bash, Perl, awk, ncal , cal (in Cygwin).
 
 ./showcal.sh 3 => Prints the content of the file "cal.conf" located in the same directory as showcal.sh . 
 
+./showcal.sh 5 => Runs nano to edit the file "cal.conf" located in the same directory as showcal.sh . 
+
+
 

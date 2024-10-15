@@ -21,6 +21,9 @@ elif [[ $argcount -eq 1 && $1 -eq 3 ]]; then
  mode=3
 elif [[ $argcount -eq 1 && $1 -eq 5 ]]; then
  mode=5
+elif [[ $argcount -eq 1 && $1 -eq 12 ]]; then
+ mode=12
+
 
 fi
 
@@ -91,6 +94,30 @@ exit 0
 fi
 
 
+### if mode 12 
+if [ $mode -eq 12 ]; then
+ mVal=$MM
+ mINC=0
+
+ for (( INC=0; INC<=$mode; INC++ ))
+ do
+  mVal=$(($mVal + $mINC)) 
+  if [ $mINC -eq 0 ]; then
+   mINC=1
+  fi
+
+  if [ $mVal -gt 12 ];
+  then
+   YY=$(($YY + 1))
+   mVal=1
+  fi
+ repeat 'x'
+ ncal -b -w -M -h -d "$YY-$mVal" | awk -F'|' 'function isnum(x){return(x==x+0)} { if(isnum($1) && $1%2!=0){ for(c=0;c<50;c++) printf "-"; print $0} else{print $0}}'
+
+ done
+ exit
+fi
+
 
 #for INC in $(eval echo {$MM..$FINM})
 for (( INC=$MM; INC<=$FINM; INC++ ))
@@ -111,3 +138,4 @@ do
  fi
 
 done
+

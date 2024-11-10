@@ -118,16 +118,23 @@ if [ $mode -eq 12 ]; then
  exit
 fi
 
+#exits above for all modes not in (nil, 12)
+
 
 #for INC in $(eval echo {$MM..$FINM})
+mVal=$MM
 for (( INC=$MM; INC<=$FINM; INC++ ))
 do
- mVal=$INC
+# echo "loop: ncal vals: $YY $mVal"
+
  if [ $mVal -gt 12 ];
  then
   YY=$(($YY + 1))
   mVal=1
  fi
+
+# echo "mod: ncal vals: $YY $mVal"
+
 
  if [ $mode -eq 0 ]; then
   ncal -b -w -M -h -d "$YY-$mVal" | awk -v ww="$WW" -v dd="$DD" '{if(match($1,"^" ww) ){print $0" <<<<<<<<<<<<<<<< ["dd"]" }else { print $0}  }'
@@ -136,6 +143,8 @@ do
   ncal -b -w -M -h -d "$YY-$mVal" | awk -F'|' 'function isnum(x){return(x==x+0)} { if(isnum($1) && $1%2!=0){ for(c=0;c<50;c++) printf "-"; print $0} else{print $0}}'
 
  fi
+
+ mVal=$(($mVal + 1))
 
 done
 

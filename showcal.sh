@@ -137,7 +137,17 @@ do
 
 
  if [ $mode -eq 0 ]; then
-  ncal -b -w -M -h -d "$YY-$mVal" | awk -v ww="$WW" -v dd="$DD" '{if(match($1,"^" ww) ){print $0" <<<<<<<<<<<<<<<< ["dd"]" }else { print $0}  }'
+
+  #test case: ncal -b -w -M -h -d 2024-12
+  if [[ $WW -eq 0 || $WW -eq 53 ]]; then
+   WW=" "1
+  fi
+
+  if [ $WW -lt 10 ]; then
+   ncal -b -w -M -h -d "$YY-$mVal" | awk -v ww="$WW" -v dd="$DD" '{if(match($0,"^" ww) ){print $0" <<<<<<<<<<<<<<<< ["dd"]" }else { print $0}  }'
+  else  
+   ncal -b -w -M -h -d "$YY-$mVal" | awk -v ww="$WW" -v dd="$DD" '{if(match($1,"^" ww) ){print $0" <<<<<<<<<<<<<<<< ["dd"]" }else { print $0}  }'
+  fi
 
  else
   ncal -b -w -M -h -d "$YY-$mVal" | awk -F'|' 'function isnum(x){return(x==x+0)} { if(isnum($1) && $1%2!=0){ for(c=0;c<50;c++) printf "-"; print $0} else{print $0}}'

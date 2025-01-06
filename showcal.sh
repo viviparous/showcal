@@ -11,6 +11,14 @@ function prcygw() {
 
 }
 
+function showdts() {
+
+ dts=$(date +"%Y-%m-%d_%H%M")
+ echo ""
+ repeat '='
+ echo "Current date: $dts"
+
+}
 
 
 mode=0
@@ -125,7 +133,8 @@ fi
 mVal=$MM
 for (( INC=$MM; INC<=$FINM; INC++ ))
 do
-# echo "loop: ncal vals: $YY $mVal"
+ #dbg VVV
+ #echo "dbg loop: ncal vals: $YY $mVal week $WW"
 
  if [ $mVal -gt 12 ];
  then
@@ -133,17 +142,14 @@ do
   mVal=1
  fi
 
-# echo "mod: ncal vals: $YY $mVal"
+# echo "dbg mode: ncal vals: $YY $mVal"
 
 
  if [ $mode -eq 0 ]; then
 
   #test case: ncal -b -w -M -h -d 2024-12
-  if [[ $WW -eq 0 || $WW -eq 53 ]]; then
-   WW=" "1
-  fi
-
-  if [ $WW -lt 10 ]; then
+  if [[ $WW -eq 0 || $WW -eq 53 || $WW -lt 10 ]]; then
+   WW=" "$WW
    ncal -b -w -M -h -d "$YY-$mVal" | awk -v ww="$WW" -v dd="$DD" '{if(match($0,"^" ww) ){print $0" <<<<<<<<<<<<<<<< ["dd"]" }else { print $0}  }'
   else  
    ncal -b -w -M -h -d "$YY-$mVal" | awk -v ww="$WW" -v dd="$DD" '{if(match($1,"^" ww) ){print $0" <<<<<<<<<<<<<<<< ["dd"]" }else { print $0}  }'
@@ -154,7 +160,12 @@ do
 
  fi
 
+ echo "---"
  mVal=$(($mVal + 1))
 
 done
+
+
+showdts
+
 

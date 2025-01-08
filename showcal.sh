@@ -20,6 +20,21 @@ function showdts() {
 
 }
 
+function showrandsig () {
+
+ rstamp0=$(strings /dev/urandom | grep -o "[[:alnum:]]" | head -n 30 | tr -d '\n' | cut -b1-24)
+ rstamp1=$(head -c 256 /dev/random| shasum -a 384  | base64 | sed 's/[=\/\\+]//g'| awk 'BEGIN {str="";} {str=str$0;} END {print str;}' | cut -b1-24)
+
+ echo "runstamp $rstamp0 $rstamp1"
+
+}
+
+function msgbox () {
+ repeat '"'
+ echo $1
+ repeat '"'
+}
+
 
 mode=0
 argcount=$#
@@ -42,7 +57,7 @@ calconf="cal.conf"
 
 YY=$(date +"%Y")
 MM=$(date +"%-m") 
-WW=$(date +"%-W")
+WW=$(date +"%-V") ##use V instead of W
 DD=$(date +"%d")
 
 LIM=3
@@ -168,4 +183,6 @@ done
 
 showdts
 
+repeat "-"
 
+showrandsig
